@@ -6,18 +6,37 @@
 //
 
 import Foundation
+import SwiftData
 
-enum ShowStatus {
+enum ShowStatus: String, Codable, CaseIterable {
     case attended
     case upcoming
 }
 
-struct Show: Identifiable {
+@Model
+final class Show: Identifiable {
     var artistName: String
     var venueName: String
     var city: String
     var date: Date
     var status: ShowStatus
     
-    let id = UUID()
+//    let id = UUID()
+    
+    var rating: Int?
+    var notes: String?
+    var setlist: [String]
+    var createdAt: Date
+    
+    init(artistName: String, venueName: String, city: String, date: Date, status: ShowStatus, rating: Int? = nil, notes: String? = nil, setlist: [String] = [], createdAt: Date = .now) {
+        self.artistName = artistName
+        self.venueName = venueName
+        self.city = city
+        self.date = date
+        self.status = status
+        self.rating = nil
+        self.notes = nil
+        self.setlist = []
+        self.createdAt = .now
+    }
 }

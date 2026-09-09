@@ -6,23 +6,25 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AttendedView: View {
-    @State private var shows: [Show] = []
+    @Query private var shows: [Show]
+    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         NavigationStack {
             List(shows) {
                 show in
                 VStack(alignment: .leading, spacing: 4) {
-                        Text(show.artistName)
-                        Text(show.venueName)
-                    }
+                    Text(show.artistName)
+                    Text(show.venueName)
+                }
             }
             .navigationTitle("Attended")
             .toolbar {
                 Button("Add show!", systemImage: "plus") {
-                    shows.append(Show(artistName: "Radiohead", venueName: "Madison Square Garden", city: "New York", date: .now, status: .attended))
+                    modelContext.insert(Show(artistName: "Radiohead", venueName: "Madison Square Garden", city: "New York", date: .now, status: .attended))
                 }
             }
         }
