@@ -24,13 +24,11 @@ struct AttendedView: View {
                     List {
                         ForEach(viewModel.filteredShows(allShows)) {
                             show in
-                            
                             Text(show.artistName)
                         }
                         .onDelete {
                             indexSet in
                             let shows = viewModel.filteredShows(allShows)
-                            
                             for index in indexSet {
                                 viewModel.delete(shows[index], context: modelContext)
                             }
@@ -40,6 +38,7 @@ struct AttendedView: View {
                 }
             }
             .navigationTitle("Attended")
+            .searchable(text: $vm.searchText, prompt: "Artists, Venues, Cities")
             .toolbar {
                 Button("Add show!", systemImage: "plus") {
                     modelContext.insert(Show(artistName: "Radiohead", venueName: "Madison Square Garden", city: "New York", date: .now, status: .attended))
