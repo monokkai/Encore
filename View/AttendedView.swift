@@ -33,4 +33,5 @@ struct AttendedView: View {
 
 #Preview {
     AttendedView()
+        .modelContainer(for: Show.self, inMemory: true)
 }
