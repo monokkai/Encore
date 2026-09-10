@@ -45,18 +45,22 @@ struct ShowRowView: View {
     }
 }
 
-#Preview("Rated row") {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: Show.self,
-    configurations: config)
-    
-    let mgk = Show(artistName: "MGK", venueName: "Coke Arena", city: "Toronto", date: .now, status: .attended)
-    
-    mgk.rating = 4
-    container.mainContext.insert(mgk)
-    
-    return ShowRowView(show: mgk)
-        .padding()
-        .modelContainer(container)
-        .previewLayout(.sizeThatFits)
+#Preview {
+    ShowRowView(show: Show(artistName: "MGK", venueName: "Coke Arena", city: "Toronto", date: .now, status: .attended))
 }
+
+//#Preview("Rated row") {
+//    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+//    let container = try! ModelContainer(for: Show.self,
+//    configurations: config)
+//
+//    let mgk = Show(artistName: "MGK", venueName: "Coke Arena", city: "Toronto", date: .now, status: .attended)
+//
+//    mgk.rating = 4
+//    container.mainContext.insert(mgk)
+//
+//    return ShowRowView(show: mgk)
+//        .padding()
+//        .modelContainer(container)
+//        .previewLayout(.sizeThatFits)
+//}

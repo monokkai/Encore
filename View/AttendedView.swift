@@ -23,8 +23,11 @@ struct AttendedView: View {
                 else {
                     List {
                         ForEach(viewModel.filteredShows(allShows)) {
-                            show in
-                            Text(show.artistName)
+                            showData in
+                            
+                            NavigationLink(value: showData) {
+                                ShowRowView(show: showData)
+                            }
                         }
                         .onDelete {
                             indexSet in
@@ -39,13 +42,16 @@ struct AttendedView: View {
             }
             .navigationTitle("Attended")
             .searchable(text: $vm.searchText, prompt: "Artists, Venues, Cities")
+            .navigationDestination(for: Show.self) { show in
+                //ShowDetailView
+            }
             .toolbar {
                 Button("Add show!", systemImage: "plus") {
                     viewModel.showingAddSheet = true
                 }
             }
             .sheet(isPresented: $vm.showingAddSheet) {
-               AddEditShowView()
+                AddEditShowView()
             }
         }
     }
