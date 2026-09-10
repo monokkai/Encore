@@ -41,8 +41,11 @@ struct AttendedView: View {
             .searchable(text: $vm.searchText, prompt: "Artists, Venues, Cities")
             .toolbar {
                 Button("Add show!", systemImage: "plus") {
-                    modelContext.insert(Show(artistName: "Radiohead", venueName: "Madison Square Garden", city: "New York", date: .now, status: .attended))
+                    viewModel.showingAddSheet = true
                 }
+            }
+            .sheet(isPresented: $vm.showingAddSheet) {
+               AddEditShowView()
             }
         }
     }
