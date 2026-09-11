@@ -58,10 +58,34 @@ struct AddEditShowView: View {
                     .onMove {
                         viewModel.setlist.move(fromOffsets: $0, toOffset: $1)
                     }
+                    
+                    TextField("Add song", text: $vm.newSetlistEntry)
+                    Button("Add") {
+                        viewModel.addSetlistEntry()
+                    }
+                    .disabled(viewModel.newSetlistEntry
+                        .trimmingCharacters(in:
+                                .whitespaces).isEmpty)
                 }
             }
         }
         
+        .navigationTitle(existingShow == nil ? "Add show" : "Edit show")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    dismiss()
+                }
+            }
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Save") {
+                    viewModel.save(to: modelContext, existing: existingShow)
+                    dismiss()
+                }
+                .disabled(!viewModel.isValid)
+            }
+        }
     }
 }
 
